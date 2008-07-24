@@ -250,7 +250,7 @@ void LineWidth(float w) { glLineWidth(w); }
 void LineStipple(int f, unsigned short p) { glLineStipple(f, p); }
 void PolygonMode(unsigned int f, unsigned int m) { glPolygonMode(glmap(f), glmap(m)); }
 void PolygonOffset(float f, float ofs) { glPolygonOffset(f, ofs); }
-void EdgeFlag(unsigned char f) { glEdgeFlag(f); } /* TODO: map? */
+void EdgeFlag(unsigned char f) { glEdgeFlag(f); }
 void Scissor(int x, int y, int w, int h) { glScissor(x, y, w, h); }
 void DrawBuffer(unsigned int m) { glDrawBuffer(glmap(m)); }
 void ReadBuffer(unsigned int m) { glReadBuffer(glmap(m)); }
@@ -272,7 +272,7 @@ void DepthRange(double n, double f) { glDepthRange(n, f); }
 
 /* accumulation buffer */
 void ClearAccum(float r, float g, float b, float a) { glClearAccum(r, g, b, a); }
-void glAccum(unsigned int op, float v) { glAccum(glmap(op), v); }
+void Accum(unsigned int op, float v) { glAccum(glmap(op), v); }
 
 /* transformation */
 void MatrixMode(unsigned int m) { glMatrixMode(glmap(m)); }
@@ -282,6 +282,10 @@ void Viewport(int x, int y, int w, int h) { glViewport(x, y, w, h); }
 void PushMatrix(void) { glPushMatrix(); }
 void PopMatrix(void) { glPopMatrix(); }
 void LoadIdentity(void) { glLoadIdentity(); }
+void LoadMatrixd(double arr[16]) { glLoadMatrixd(arr); }
+void LoadMatrixf(float arr[16]) { glLoadMatrixf(arr); }
+void MultMatrixd(double arr[16]) { glMultMatrixd(arr); }
+void MultMatrixf(float arr[16]) { glMultMatrixf(arr); }
 void Rotated(double phi, double x, double y, double z) { glRotated(phi, x, y, z); }
 void Rotatef(float phi, float x, float y, float z) { glRotatef(phi, x, y, z); }
 void Scaled(double x, double y, double z) { glScaled(x, y, z); }
@@ -312,28 +316,72 @@ void Vertex4s(short x, short y, short z, short a) { glVertex4s(x, y, z, a); }
 
 void Vertex2dv(double v[2]) { glVertex2dv(v); }
 void Vertex2fv(float v[2]) { glVertex2fv(v); }
+void Vertex2iv(int v[2]) { glVertex2iv(v); }
+void Vertex2sv(short v[2]) { glVertex2sv(v); }
 
 void Vertex3dv(double v[3]) { glVertex3dv(v); }
 void Vertex3fv(float v[3]) { glVertex3fv(v); }
+void Vertex3iv(int v[3]) { glVertex3iv(v); }
+void Vertex3sv(short v[3]) { glVertex3sv(v); }
 
 void Vertex4dv(double v[4]) { glVertex4dv(v); }
 void Vertex4fv(float v[4]) { glVertex4fv(v); }
+void Vertex4iv(int v[4]) { glVertex4iv(v); }
+void Vertex4sv(short v[4]) { glVertex4sv(v); }
 
+void Normal3b(signed char x, signed char y, signed char z) { glNormal3b(x, y, z); }
 void Normal3d(double x, double y, double z) { glNormal3d(x, y, z); }
 void Normal3f(float x, float y, float z) { glNormal3f(x, y, z); }
+void Normal3i(int x, int y, int z) { glNormal3i(x, y, z); }
+void Normal3s(short x, short y, short z) { glNormal3s(x, y, z); }
 
+void Normal3bv(signed char v[3]) { glNormal3bv(v); }
 void Normal3dv(double v[3]) { glNormal3dv(v); }
 void Normal3fv(float v[3]) { glNormal3fv(v); }
+void Normal3iv(int v[3]) { glNormal3iv(v); }
+void Normal3sv(short v[3]) { glNormal3sv(v); }
 
+void Indexd(double v) { glIndexd(v); }
+void Indexf(float v) { glIndexf(v); }
+void Indexi(int v) { glIndexi(v); }
+void Indexs(short v) { glIndexs(v); }
+void Indexub(unsigned char v) { glIndexub(v); }
+
+void Color3b(signed char r, signed char g, signed char b) { glColor3b(r, g, b); }
 void Color3d(double r, double g, double b) { glColor3d(r, g, b); }
 void Color3f(float r, float g, float b) { glColor3f(r, g, b); }
+void Color3i(int r, int g, int b) { glColor3i(r, g, b); }
+void Color3s(short r, short g, short b) { glColor3s(r, g, b); }
+void Color3ub(unsigned char r, unsigned char g, unsigned char b) { glColor3ub(r, g, b); }
+void Color3ui(unsigned int r, unsigned int g, unsigned int b) { glColor3ui(r, g, b); }
+void Color3us(unsigned short r, unsigned short g, unsigned short b) { glColor3us(r, g, b); }
 
+void Color4b(signed char r, signed char g, signed char b, signed char a) { glColor4b(r, g, b, a); }
 void Color4d(double r, double g, double b, double a) { glColor4d(r, g, b, a); }
 void Color4f(float r, float g, float b, float a) { glColor4f(r, g, b, a); }
+void Color4i(int r, int g, int b, int a) { glColor4i(r, g, b, a); }
+void Color4s(short r, short g, short b, short a) { glColor4s(r, g, b, a); }
+void Color4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a) { glColor4ub(r, g, b, a); }
+void Color4ui(unsigned int r, unsigned int g, unsigned int b, unsigned int a) { glColor4ui(r, g, b, a); }
+void Color4us(unsigned short r, unsigned short g, unsigned short b, unsigned short a) { glColor4us(r, g, b, a); }
 
+void Color3bv(signed char arr[3]) { glColor3bv(arr); }
+void Color3dv(double arr[3]) { glColor3dv(arr); }
 void Color3fv(float arr[3]) { glColor3fv(arr); }
+void Color3iv(int arr[3]) { glColor3iv(arr); }
+void Color3sv(short arr[3]) { glColor3sv(arr); }
+void Color3ubv(unsigned char arr[3]) { glColor3ubv(arr); }
+void Color3uiv(unsigned int arr[3]) { glColor3uiv(arr); }
+void Color3usv(unsigned short arr[3]) { glColor3usv(arr); }
 
+void Color4bv(signed char arr[4]) { glColor4bv(arr); }
+void Color4dv(double arr[4]) { glColor4dv(arr); }
 void Color4fv(float arr[4]) { glColor4fv(arr); }
+void Color4iv(int arr[4]) { glColor4iv(arr); }
+void Color4sv(short arr[4]) { glColor4sv(arr); }
+void Color4ubv(unsigned char arr[4]) { glColor4ubv(arr); }
+void Color4uiv(unsigned int arr[4]) { glColor4uiv(arr); }
+void Color4usv(unsigned short arr[4]) { glColor4usv(arr); }
 
 /* vertex arrays 1.1 */
 
@@ -341,18 +389,40 @@ void Color4fv(float arr[4]) { glColor4fv(arr); }
 void ShadeModel(unsigned int m) { glShadeModel(glmap(m)); }
 void Lightf(unsigned int l, unsigned int p, float v) { glLightf(glmap(l), glmap(p), v); }
 void Lighti(unsigned int l, unsigned int p, int v) { glLighti(glmap(l), glmap(p), v); }
+void Lightfv(unsigned int l, unsigned int p, float arr[4]) { glLightfv(glmap(l), glmap(p), arr); }
+void Lightiv(unsigned int l, unsigned int p, int arr[4]) { glLightiv(glmap(l), glmap(p), arr); }
 void LightModelf(unsigned int p, float v) { glLightModelf(glmap(p), v); }
 void LightModeli(unsigned int p, int v) { glLightModeli(glmap(p), v); }
 void LightModelfv(unsigned int p, float arr[4]) { glLightModelfv(p, arr); }
+void LightModeliv(unsigned int p, int arr[4]) { glLightModeliv(p, arr); }
 void Materialf(unsigned int f, unsigned int p, float v) { glMaterialf(glmap(f), glmap(p), v); }
 void Materiali(unsigned int f, unsigned int p, int v) { glMateriali(glmap(f), glmap(p), v); }
 void Materialfv(unsigned int f, unsigned int p, float arr[4]) { glMaterialfv(glmap(f), glmap(p), arr); }
+void Materialiv(unsigned int f, unsigned int p, int arr[4]) { glMaterialiv(glmap(f), glmap(p), arr); }
 
 /* raster functions */
 
 /* stenciling */
 
 /* texture mapping */
+void GenTextures(int n, struct textures * t)
+{
+	t->data = malloc(sizeof(unsigned int) * n);
+	glGenTextures(n, (unsigned int *)t->data);
+}
+
+void DeleteTextures(int n, struct textures * t)
+{
+	glDeleteTextures(n, (unsigned int *)t->data);
+	free(t->data);
+}
+
+unsigned int texture(struct textures * t, unsigned int i) { return ((unsigned int *)t->data)[i]; }
+
+void BindTexture(unsigned int tgt, unsigned int t) { glBindTexture(glmap(tgt), t); }
+void TexImage2D(unsigned int tgt, int level, int intfmt, int w, int h, int border, unsigned int fmt, unsigned int type, void * px) { glTexImage2D(glmap(tgt), level, intfmt, w, h, border, glmap(fmt), glmap(type), px); }
+void TexParameterf(unsigned int t, unsigned int p, float prm) { glTexParameterf(glmap(t), glmap(p), prm); }
+void TexParameteri(unsigned int t, unsigned int p, int prm) { glTexParameteri(glmap(t), glmap(p), prm); }
 
 /* evaluator */
 

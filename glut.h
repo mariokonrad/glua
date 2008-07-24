@@ -5,7 +5,6 @@
 #define _DOUBLE 0x00000002
 #define _DEPTH  0x00000004
 
-void GLUT_Init(void);
 void RegisterCallback(void);
 void InitWindowSize(int, int);
 void InitWindowPosition(int, int);

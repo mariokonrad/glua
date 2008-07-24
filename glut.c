@@ -101,12 +101,6 @@ void InitDisplayMode(int mode)
 	glutInitDisplayMode(glutmode);
 }
 
-void GLUT_Init(void)
-{
-	int argc = 0;
-	glutInit(&argc, NULL);
-}
-
 void InitWindowSize(int w, int h) { glutInitWindowSize(w, h); }
 void InitWindowPosition(int x, int y) { glutInitWindowPosition(x, y); }
 void CreateWindow(const char * title) { glutCreateWindow(title); }

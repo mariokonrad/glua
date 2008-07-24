@@ -5,6 +5,19 @@
 #define _FALSE                                0x0
 #define _TRUE                                 0x1
 
+/* data types */
+#define _BYTE                                 0x1400
+#define _UNSIGNED_BYTE                        0x1401
+#define _SHORT                                0x1402
+#define _UNSIGNED_SHORT                       0x1403
+#define _INT                                  0x1404
+#define _UNSIGNED_INT                         0x1405
+#define _FLOAT                                0x1406
+#define _DOUBLE                               0x140A
+#define _2_BYTES                              0x1407
+#define _3_BYTES                              0x1408
+#define _4_BYTES                              0x1409
+
 /* primitives */
 #define _POINTS                               0x0000
 #define _LINES                                0x0001
@@ -169,6 +182,18 @@
 #define _RENDER                               0x1C00
 #define _SELECT                               0x1C02
 
+/* fog */
+#define _FOG                                  0x0B60
+#define _FOG_MODE                             0x0B65
+#define _FOG_DENSITY                          0x0B62
+#define _FOG_COLOR                            0x0B66
+#define _FOG_INDEX                            0x0B61
+#define _FOG_START                            0x0B63
+#define _FOG_END                              0x0B64
+#define _LINEAR                               0x2601
+#define _EXP                                  0x0800
+#define _EXP2                                 0x0801
+
 /* hints */
 #define _FOG_HINT                             0x0C54
 #define _LINE_SMOOTH_HINT                     0x0C52
@@ -178,6 +203,93 @@
 #define _DONT_CARE                            0x1100
 #define _FASTEST                              0x1101
 #define _NICEST                               0x1102
+
+/* texture mapping */
+#define _TEXTURE_ENV                          0x2300
+#define _TEXTURE_ENV_MODE                     0x2200
+#define _TEXTURE_1D                           0x0DE0
+#define _TEXTURE_2D                           0x0DE1
+#define _TEXTURE_WRAP_S                       0x2802
+#define _TEXTURE_WRAP_T                       0x2803
+#define _TEXTURE_MAG_FILTER                   0x2800
+#define _TEXTURE_MIN_FILTER                   0x2801
+#define _TEXTURE_ENV_COLOR                    0x2201
+#define _TEXTURE_GEN_S                        0x0C60
+#define _TEXTURE_GEN_T                        0x0C61
+#define _TEXTURE_GEN_MODE                     0x2500
+#define _TEXTURE_BORDER_COLOR                 0x1004
+#define _TEXTURE_WIDTH                        0x1000
+#define _TEXTURE_HEIGHT                       0x1001
+#define _TEXTURE_BORDER                       0x1005
+#define _TEXTURE_COMPONENTS                   0x1003
+#define _TEXTURE_RED_SIZE                     0x805C
+#define _TEXTURE_GREEN_SIZE                   0x805D
+#define _TEXTURE_BLUE_SIZE                    0x805E
+#define _TEXTURE_ALPHA_SIZE                   0x805F
+#define _TEXTURE_LUMINANCE_SIZE               0x8060
+#define _TEXTURE_INTENSITY_SIZE               0x8061
+#define _NEAREST_MIPMAP_NEAREST               0x2700
+#define _NEAREST_MIPMAP_LINEAR                0x2702
+#define _LINEAR_MIPMAP_NEAREST                0x2701
+#define _LINEAR_MIPMAP_LINEAR                 0x2703
+#define _OBJECT_LINEAR                        0x2401
+#define _OBJECT_PLANE                         0x2501
+#define _EYE_LINEAR                           0x2400
+#define _EYE_PLANE                            0x2502
+#define _SPHERE_MAP                           0x2402
+#define _DECAL                                0x2101
+#define _MODULATE                             0x2100
+#define _NEAREST                              0x2600
+#define _REPEAT                               0x2901
+#define _CLAMP                                0x2900
+#define _S                                    0x2000
+#define _T                                    0x2001
+#define _R                                    0x2002
+#define _Q                                    0x2003
+#define _TEXTURE_GEN_R                        0x0C62
+#define _TEXTURE_GEN_Q                        0x0C63
+
+/* buffers, pixel drawing/reading */
+#define _NONE                                 0x0
+#define _LEFT                                 0x0406
+#define _RIGHT                                0x0407
+/*_FRONT                                      0x0404 */
+/*_BACK                                       0x0405 */
+/*_FRONT_AND_BACK                             0x0408 */
+#define _FRONT_LEFT                           0x0400
+#define _FRONT_RIGHT                          0x0401
+#define _BACK_LEFT                            0x0402
+#define _BACK_RIGHT                           0x0403
+#define _AUX0                                 0x0409
+#define _AUX1                                 0x040A
+#define _AUX2                                 0x040B
+#define _AUX3                                 0x040C
+#define _COLOR_INDEX                          0x1900
+#define _RED                                  0x1903
+#define _GREEN                                0x1904
+#define _BLUE                                 0x1905
+#define _ALPHA                                0x1906
+#define _LUMINANCE                            0x1909
+#define _LUMINANCE_ALPHA                      0x190A
+#define _ALPHA_BITS                           0x0D55
+#define _RED_BITS                             0x0D52
+#define _GREEN_BITS                           0x0D53
+#define _BLUE_BITS                            0x0D54
+#define _INDEX_BITS                           0x0D51
+#define _SUBPIXEL_BITS                        0x0D50
+#define _AUX_BUFFERS                          0x0C00
+#define _READ_BUFFER                          0x0C02
+#define _DRAW_BUFFER                          0x0C01
+#define _DOUBLEBUFFER                         0x0C32
+#define _STEREO                               0x0C33
+#define _BITMAP                               0x1A00
+#define _COLOR                                0x1800
+#define _DEPTH                                0x1801
+#define _STENCIL                              0x1802
+#define _DITHER                               0x0BD0
+#define _RGB                                  0x1907
+#define _RGBA                                 0x1908
+
 
 /* attribute bits */
 #define _CURRENT_BIT          0x00000001
@@ -230,7 +342,7 @@ void DrawBuffer(unsigned int);
 void ReadBuffer(unsigned int);
 void Enable(unsigned int);
 void Disable(unsigned int);
-/* unsigned char IsEnabled(unsigned int); */
+unsigned char IsEnabled(unsigned int);
 /* void EnableClientState(unsigned int) */ /* 1.1 */
 /* void DisableClientState(unsigned int) */ /* 1.1 */
 /* void GetBooleanv(...) */
@@ -256,7 +368,7 @@ void DepthRange(double, double);
 
 /* accumulation buffer */
 void ClearAccum(float, float, float, float);
-void glAccum(unsigned int, float);
+void Accum(unsigned int, float);
 
 /* transformation */
 void MatrixMode(unsigned int);
@@ -266,10 +378,10 @@ void Viewport(int, int, int, int);
 void PushMatrix(void);
 void PopMatrix(void);
 void LoadIdentity(void);
-/* void LoadMatrixd(double *); */
-/* void LoadMatrixf(float *); */
-/* void MultMatrixd(double *); */
-/* void MultMatrixf(float *); */
+void LoadMatrixd(double arr[16]);
+void LoadMatrixf(float arr[16]);
+void MultMatrixd(double arr[16]);
+void MultMatrixf(float arr[16]);
 void Rotated(double, double, double, double);
 void Rotatef(float, float, float, float);
 void Scaled(double, double, double);
@@ -308,36 +420,36 @@ void Vertex4s(short, short, short, short);
 
 void Vertex2dv(double arr[2]);
 void Vertex2fv(float arr[2]);
-/* void Vertex2iv(int arr[2]); */
-/* void Vertex2sv(short arr[2]); */
+void Vertex2iv(int arr[2]);
+void Vertex2sv(short arr[2]);
 
 void Vertex3dv(double arr[3]);
 void Vertex3fv(float arr[3]);
-/* void Vertex3iv(int arr[3]); */
-/* void Vertex3sv(short arr[3]); */
+void Vertex3iv(int arr[3]);
+void Vertex3sv(short arr[3]);
 
 void Vertex4dv(double arr[4]);
 void Vertex4fv(float arr[4]);
-/* void Vertex4iv(int arr[4]); */
-/* void Vertex4sv(short arr[4]); */
+void Vertex4iv(int arr[4]);
+void Vertex4sv(short arr[4]);
 
-/* void Normal3b(signed char, signed char, signed char); */
+void Normal3b(signed char, signed char, signed char);
 void Normal3d(double, double, double);
 void Normal3f(float, float, float);
-/* void Normal3i(int, int, int); */
-/* void Normal3s(short, short, short); */
+void Normal3i(int, int, int);
+void Normal3s(short, short, short);
 
-/* void Normal3bv(signed char arr[3]); */
+void Normal3bv(signed char arr[3]);
 void Normal3dv(double arr[3]);
 void Normal3fv(float arr[3]);
-/* void Normal3iv(int arr[3]); */
-/* void Normal3sv(short arr[3]); */
+void Normal3iv(int arr[3]);
+void Normal3sv(short arr[3]);
 
-/* void Indexd(double); */
-/* void Indexf(float); */
-/* void Indexi(int); */
-/* void Indexs(short); */
-/* void Indexub(unsigned char); */ /* 1.1 */
+void Indexd(double);
+void Indexf(float);
+void Indexi(int);
+void Indexs(short);
+void Indexub(unsigned char); /* 1.1 */
 
 /* void Indexdv(double *); */
 /* void Indexfv(float *); */
@@ -345,41 +457,41 @@ void Normal3fv(float arr[3]);
 /* void Indexsv(short *); */
 /* void Indexubv(unsigned char *); */ /* 1.1 */
 
-/* void Color3b(signed char, signed char, signed char); */
+void Color3b(signed char, signed char, signed char);
 void Color3d(double, double, double);
 void Color3f(float, float, float);
-/* void Color3i(int, int, int); */
-/* void Color3s(short, short, short); */
-/* void Color3ub(unsigned char, unsigned char, unsigned char); */
-/* void Color3ui(unsigned int, unsigned int, unsigned int); */
-/* void Color3us(unsigned short, unsigned short, unsigned short); */
+void Color3i(int, int, int);
+void Color3s(short, short, short);
+void Color3ub(unsigned char, unsigned char, unsigned char);
+void Color3ui(unsigned int, unsigned int, unsigned int);
+void Color3us(unsigned short, unsigned short, unsigned short);
 
-/* void Color4b(signed char, signed char, signed char, signed char); */
+void Color4b(signed char, signed char, signed char, signed char);
 void Color4d(double, double, double, double);
 void Color4f(float, float, float, float);
-/* void Color4i(int, int, int, int); */
-/* void Color4s(short, short, short, short); */
-/* void Color4ub(unsigned char, unsigned char, unsigned char, unsigned char); */
-/* void Color4ui(unsigned int, unsigned int, unsigned int, unsigned int); */
-/* void Color4us(unsigned short, unsigned short, unsigned short, unsigned short); */
+void Color4i(int, int, int, int);
+void Color4s(short, short, short, short);
+void Color4ub(unsigned char, unsigned char, unsigned char, unsigned char);
+void Color4ui(unsigned int, unsigned int, unsigned int, unsigned int);
+void Color4us(unsigned short, unsigned short, unsigned short, unsigned short);
 
-/* void Color3bv(signed char arr[3]); */
-/* void Color3dv(double arr[3]); */
+void Color3bv(signed char arr[3]);
+void Color3dv(double arr[3]);
 void Color3fv(float arr[3]);
-/* void Color3iv(int arr[3]); */
-/* void Color3sv(short arr[3]); */
-/* void Color3ubv(unsigned char arr[3]); */
-/* void Color3uiv(unsigned int arr[3]); */
-/* void Color3usv(unsigned short arr[3]); */
+void Color3iv(int arr[3]);
+void Color3sv(short arr[3]);
+void Color3ubv(unsigned char arr[3]);
+void Color3uiv(unsigned int arr[3]);
+void Color3usv(unsigned short arr[3]);
 
-/* void Color4bv(signed char arr[4]); */
-/* void Color4dv(double arr[4]); */
+void Color4bv(signed char arr[4]);
+void Color4dv(double arr[4]);
 void Color4fv(float arr[4]);
-/* void Color4iv(int arr[4]); */
-/* void Color4sv(short arr[4]); */
-/* void Color4ubv(unsigned char arr[4]); */
-/* void Color4uiv(unsigned int arr[4]); */
-/* void Color4usv(unsigned short arr[4]); */
+void Color4iv(int arr[4]);
+void Color4sv(short arr[4]);
+void Color4ubv(unsigned char arr[4]);
+void Color4uiv(unsigned int arr[4]);
+void Color4usv(unsigned short arr[4]);
 
 /* void TexCoord*(); */
 /* void RasterPos*(); */
@@ -402,18 +514,18 @@ void Color4fv(float arr[4]);
 void ShadeModel(unsigned int);
 void Lightf(unsigned int, unsigned int, float);
 void Lighti(unsigned int, unsigned int, int);
-/* void Lightfv(unsigned int, unsigned int, float *); */
-/* void Lightiv(unsigned int, unsigned int, int *); */
+void Lightfv(unsigned int, unsigned int, float arr[4]);
+void Lightiv(unsigned int, unsigned int, int arr[4]);
 /* void GetLightfv(unsigned int, unsigned int, float *); */
 /* void GetLightiv(unsigned int, unsigned int, int *); */
 void LightModelf(unsigned int, float);
 void LightModeli(unsigned int, int);
 void LightModelfv(unsigned int, float arr[4]);
-/* void LightModeliv(unsigned int, int arr[4]); */
+void LightModeliv(unsigned int, int arr[4]);
 void Materialf(unsigned int, unsigned int, float);
 void Materiali(unsigned int, unsigned int, int);
 void Materialfv(unsigned int, unsigned int, float arr[4]);
-/* void Materialiv(unsigned int, unsigned int, int arr[4]); */
+void Materialiv(unsigned int, unsigned int, int arr[4]);
 
 /* raster functions */
 /* * */
@@ -422,9 +534,19 @@ void Materialfv(unsigned int, unsigned int, float arr[4]);
 /* * */
 
 /* texture mapping */
-/* * */
+struct textures {
+	void * data;
+};
+unsigned int texture(struct textures *, unsigned int);
 
-/* 1.1 functions */
+void GenTextures(int, struct textures *); /* 1.1 */
+void DeleteTextures(int, struct textures *); /* 1.1 */
+void BindTexture(unsigned int, unsigned int); /* 1.1 */
+void TexImage2D(unsigned int, int, int, int, int, int, unsigned int, unsigned int, void *);
+void TexParameterf(unsigned int, unsigned int, float);
+void TexParameteri(unsigned int, unsigned int, int);
+/* void TexParameterfv(unsigned int, unsigned int, float *); */
+/* void TexParameteriv(unsigned int, unsigned int, int *); */
 /* * */
 
 /* evaluator */
