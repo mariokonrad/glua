@@ -114,11 +114,27 @@ void SpecialFunc(const char *f ) { func_special = f; }
 void MainLoop(void) { glutMainLoop(); }
 void SwapBuffers(void) { glutSwapBuffers(); }
 void PostRedisplay(void) { glutPostRedisplay(); }
-void WireSphere(float r, int a, int b) { glutWireSphere(r, a, b); }
-void SolidSphere(float r, int a, int b) { glutSolidSphere(r, a, b); }
 void ReshapeWindow(int w, int h) { glutReshapeWindow(w, h); }
 void PositionWindow(int x, int y) { glutPositionWindow(x, y); }
 void FullScreen(void) { glutFullScreen(); }
+
+void WireSphere(float r, int a, int b) { glutWireSphere(r, a, b); }
 void WireCube(float r) { glutWireCube(r); }
+void WireCone(double base, double h, int slices, int stacks) { glutWireCone(base, h, slices, stacks); }
+void WireTorus(double ri, double ro, int sides, int rings) { glutWireTorus(ri, ro, sides, rings); }
+void WireDodecahedron(void) { glutWireDodecahedron(); }
+void WireTeapot(double size) { glutWireTeapot(size); }
+void WireOctahedron(void) { glutWireOctahedron(); }
+void WireTetrahedron(void) { glutWireTetrahedron(); }
+void WireIcosahedron(void) { glutWireIcosahedron(); }
+
+void SolidSphere(float r, int a, int b) { glutSolidSphere(r, a, b); }
 void SolidCube(float r) { glutSolidCube(r); }
+void SolidCone(double base, double h, int slices, int stacks) { glutSolidCone(base, h, slices, stacks); }
+void SolidTorus(double ri, double ro, int sides, int rings) { glutSolidTorus(ri, ro, sides, rings); }
+void SolidDodecahedron(void) { glutSolidDodecahedron(); }
+void SolidTeapot(double size) { glutSolidTeapot(size); }
+void SolidOctahedron(void) { glutSolidOctahedron(); }
+void SolidTetrahedron(void) { glutSolidTetrahedron(); }
+void SolidIcosahedron(void) { glutSolidIcosahedron(); }
 

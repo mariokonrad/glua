@@ -3,12 +3,21 @@
 #include "lualib.h"
 #include "lauxlib.h"
 #include <GL/glut.h>
+#include <setjmp.h>
 
 extern int luaopen_gl(lua_State* L);
 extern int luaopen_glu(lua_State* L);
 extern int luaopen_glut(lua_State* L);
 extern int luaopen_img(lua_State* L);
 extern void register_lua(lua_State * lua);
+
+static jmp_buf env;
+
+static int panic(lua_State * L)
+{
+	longjmp(env, -1);
+	return 0;
+}
 
 int main(int argc, char ** argv)
 {
@@ -26,10 +35,17 @@ int main(int argc, char ** argv)
 	luaopen_glut(L);
 	luaopen_img(L);
 	register_lua(L);
-	if (luaL_loadfile(L,argv[1]) == 0) {
-	    if (lua_pcall(L,0,0,0)) lua_error(L);
+	lua_atpanic(L, panic);
+	if (setjmp(env) == 0) {
+		if (luaL_loadfile(L,argv[1]) == 0) {
+		    if (lua_pcall(L,0,0,0)) lua_error(L);
+		} else {
+		    printf("unable to load %s\n",argv[1]);
+		}
 	} else {
-	    printf("unable to load %s\n",argv[1]);
+		lua_atpanic(L, NULL);
+		printf("ERROR: %s\n", lua_tostring(L, -1));
+		lua_pop(L, 1);
 	}
 	lua_close(L);
 	return 0;

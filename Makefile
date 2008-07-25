@@ -1,11 +1,14 @@
 # Makefile
 
-CFLAGS=-O2 -DFAST_CONV
+CFLAGS=-O2
 
 #OPENGL_LIBS=-lopengl32 -lglu32 -lglut32
 OPENGL_LIBS=-lGL -lGLU -lglut
 
-.PHONY: all clean
+CC=gcc
+SWIG=swig
+
+.PHONY: all clean clean-all
 
 all : liblua glua
 
@@ -18,24 +21,26 @@ glua : glua.o \
     glu_wrap.o \
     glut_wrap.o \
     img_wrap.o
-	gcc -o $@ $^ -Llua -llua $(OPENGL_LIBS)
+	$(CC) -o $@ $^ -Llua -llua $(OPENGL_LIBS)
 
 gl_wrap.c : gl.i
-	swig -lua $<
+	$(SWIG) -lua $<
 
 glu_wrap.c : glu.i
-	swig -lua $<
+	$(SWIG) -lua $<
 
 glut_wrap.c : glut.i
-	swig -lua $<
+	$(SWIG) -lua $<
 
 img_wrap.c : img.i
-	swig -lua $<
+	$(SWIG) -lua $<
 
 clean :
-	rm -fr *.o *.exe glua gl_wrap.c glu_wrap.c glut_wrap.c img_wrap.c *.stackdump
+	rm -fr *.o *.exe glua *_wrap.c *.stackdump
+
+clean-all : clean
 	$(MAKE) -C lua clean
 
 %.o : %.c
-	gcc -o $@ -c $< $(CFLAGS) -I. -Ilua
+	$(CC) -o $@ -c $< $(CFLAGS) -I. -Ilua
 

@@ -11,7 +11,7 @@ display = function()
     gl.Translatef(0.0, 0.0, -10.0)
 
 	-- static sphere
-	gl.Color4fv({1.0, 1.0, 1.0, 1.0})
+	gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
 	gl.PushMatrix()
 		gl.BindTexture(gl._TEXTURE_2D, tex1)
 		gl.Rotatef(phi, 1.0, 1.0, 1.0)
@@ -87,9 +87,9 @@ gl.FrontFace(gl._CCW)
 gl.PolygonMode(gl._FRONT_AND_BACK, gl._FILL)
 
 gl.GenTextures(1, tex)
-tex1 = gl.texture(tex, 0)
+tex1 = gl.tex(tex, 0)
 gl.BindTexture(gl._TEXTURE_2D, tex1)
-gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width_get(img1), img.image_height_get(img1), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.image_data_get(img1))
+gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.width(img1), img.height(img1), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.data(img1))
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
 
