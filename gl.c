@@ -389,6 +389,18 @@ void Color4uiv(unsigned int v[4])
 void Color4usv(unsigned short v[4])
 { glColor4usv(v); }
 
+void TexCoord1d(GLdouble s)
+{ glTexCoord1d(s); }
+
+void TexCoord1f(GLfloat s)
+{ glTexCoord1f(s); }
+
+void TexCoord1i(GLint s)
+{ glTexCoord1i(s); }
+
+void TexCoord1s(GLshort s)
+{ glTexCoord1s(s); }
+
 
 void ShadeModel(unsigned int m)
 { glShadeModel(m); }
@@ -428,6 +440,36 @@ void Materialfv(unsigned int f, unsigned int p, float v[4])
 
 void Materialiv(unsigned int f, unsigned int p, int v[4])
 { glMaterialiv(f, p, v); }
+
+
+void StencilFunc(GLenum func, GLint ref, GLuint mask)
+{ glStencilFunc(func, ref, mask); }
+
+void StencilMask(GLuint mask)
+{ glStencilMask(mask); }
+
+void StencilOp(GLenum fail, GLenum zfail, GLenum zpass)
+{ glStencilOp(fail, zfail, zpass); }
+
+void ClearStencil(GLint s)
+{ glClearStencil(s); }
+
+
+void TexGend(GLenum coord, GLenum pname, GLdouble param)
+{ glTexGend(coord, pname, param); }
+
+void TexGenf(GLenum coord, GLenum pname, GLfloat param)
+{ glTexGenf(coord, pname, param); }
+
+void TexGeni(GLenum coord, GLenum pname, GLint param)
+{ glTexGeni(coord, pname, param); }
+
+
+void Fogf(GLenum pname, GLfloat param)
+{ glFogf(pname, param); }
+
+void Fogi(GLenum pname, GLint param)
+{ glFogi(pname, param); }
 
 
 void GenTextures(GLsizei n, struct textures * t)

@@ -790,27 +790,27 @@ void Color4s(GLshort red, GLshort green, GLshort blue, GLshort alpha);
 void Color4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha);
 void Color4ui(GLuint red, GLuint green, GLuint blue, GLuint alpha);
 void Color4us(GLushort red, GLushort green, GLushort blue, GLushort alpha);
-void Color3bv(GLbyte *v);
-void Color3dv(GLdouble *v);
-void Color3fv(GLfloat *v);
-void Color3iv(GLint *v);
-void Color3sv(GLshort *v);
-void Color3ubv(GLubyte *v);
-void Color3uiv(GLuint *v);
-void Color3usv(GLushort *v);
-void Color4bv(GLbyte *v);
-void Color4dv(GLdouble *v);
+void Color3bv(GLbyte v[3]);
+void Color3dv(GLdouble v[3]);
+void Color3fv(GLfloat v[3]);
+void Color3iv(GLint v[3]);
+void Color3sv(GLshort v[3]);
+void Color3ubv(GLubyte v[3]);
+void Color3uiv(GLuint v[3]);
+void Color3usv(GLushort v[3]);
+void Color4bv(GLbyte v[4]);
+void Color4dv(GLdouble v[4]);
 void Color4fv(GLfloat v[4]);
-void Color4iv(GLint *v);
-void Color4sv(GLshort *v);
-void Color4ubv(GLubyte *v);
-void Color4uiv(GLuint *v);
-void Color4usv(GLushort *v);
-/*
+void Color4iv(GLint v[4]);
+void Color4sv(GLshort v[4]);
+void Color4ubv(GLubyte v[4]);
+void Color4uiv(GLuint v[4]);
+void Color4usv(GLushort v[4]);
 void TexCoord1d(GLdouble s);
 void TexCoord1f(GLfloat s);
 void TexCoord1i(GLint s);
 void TexCoord1s(GLshort s);
+/*
 void TexCoord2d(GLdouble s, GLdouble t);
 void TexCoord2f(GLfloat s, GLfloat t);
 void TexCoord2i(GLint s, GLint t);
@@ -917,18 +917,16 @@ void CopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum type);
 */
 
 /* Stenciling */
-/*
 void StencilFunc(GLenum func, GLint ref, GLuint mask);
 void StencilMask(GLuint mask);
 void StencilOp(GLenum fail, GLenum zfail, GLenum zpass);
 void ClearStencil(GLint s);
-*/
 
 /* Texture mapping */
-/*
 void TexGend(GLenum coord, GLenum pname, GLdouble param);
 void TexGenf(GLenum coord, GLenum pname, GLfloat param);
 void TexGeni(GLenum coord, GLenum pname, GLint param);
+/*
 void TexGendv(GLenum coord, GLenum pname, GLdouble *params);
 void TexGenfv(GLenum coord, GLenum pname, GLfloat *params);
 void TexGeniv(GLenum coord, GLenum pname, GLint *params);
@@ -986,9 +984,9 @@ void EvalMesh2(GLenum mode, GLint i1, GLint i2, GLint j1, GLint j2);
 */
 
 /* Fog */
-/*
 void Fogf(GLenum pname, GLfloat param);
 void Fogi(GLenum pname, GLint param);
+/*
 void Fogfv(GLenum pname, GLfloat *params);
 void Fogiv(GLenum pname, GLint *params);
 */
@@ -1005,6 +1003,7 @@ void PopName(void);
 */
 
 /* 1.1 functions */
+
 /* texture objects */
 void GenTextures(GLsizei n, struct textures *textures);
 void DeleteTextures(GLsizei n, struct textures *textures);
