@@ -654,26 +654,22 @@ void EdgeFlag(GLboolean flag);
 void EdgeFlagv(GLboolean *flag);
 */
 void Scissor(GLint x, GLint y, GLsizei width, GLsizei height);
-/*
-void ClipPlane(GLenum plane, GLdouble *equation);
+void ClipPlane(GLenum plane, GLdouble equation[4]);
 void GetClipPlane(GLenum plane, GLdouble *equation);
-*/
 void DrawBuffer(GLenum mode);
 void ReadBuffer(GLenum mode);
 void Enable(GLenum cap);
 void Disable(GLenum cap);
 GLboolean IsEnabled(GLenum cap);
-/* void EnableClientState(GLenum cap); */ /* 1.1 */
-/* void DisableClientState(GLenum cap); */ /* 1.1 */
-/*
+void EnableClientState(GLenum cap); /* 1.1 */
+void DisableClientState(GLenum cap); /* 1.1 */
 void GetBooleanv(GLenum pname, GLboolean *params);
 void GetDoublev(GLenum pname, GLdouble *params);
 void GetFloatv(GLenum pname, GLfloat *params);
 void GetIntegerv(GLenum pname, GLint *params);
 void PushAttrib(GLbitfield mask);
 void PopAttrib(void);
-*/
-/* void PushClientAttrib(GLbitfield mask); */ /* 1.1 */
+void PushClientAttrib(GLbitfield mask); /* 1.1 */
 void PopClientAttrib(void);  /* 1.1 */
 GLint RenderMode(GLenum mode);
 GLenum GetError(void);
@@ -714,7 +710,6 @@ void Translated(GLdouble x, GLdouble y, GLdouble z);
 void Translatef(GLfloat x, GLfloat y, GLfloat z);
 
 /* Display Lists */
-/*
 GLboolean IsList(GLuint list);
 void DeleteLists(GLuint list, GLsizei range);
 GLuint GenLists(GLsizei range);
@@ -723,7 +718,6 @@ void EndList(void);
 void CallList(GLuint list);
 void CallLists(GLsizei n, GLenum type, GLvoid *lists);
 void ListBase(GLuint base);
-*/
 
 /* Drawing Functions */
 void Begin(GLenum mode);
@@ -740,40 +734,38 @@ void Vertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
 void Vertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 void Vertex4i(GLint x, GLint y, GLint z, GLint w);
 void Vertex4s(GLshort x, GLshort y, GLshort z, GLshort w);
-void Vertex2dv(GLdouble *v);
-void Vertex2fv(GLfloat *v);
-void Vertex2iv(GLint *v);
-void Vertex2sv(GLshort *v);
-void Vertex3dv(GLdouble *v);
+void Vertex2dv(GLdouble v[2]);
+void Vertex2fv(GLfloat v[2]);
+void Vertex2iv(GLint v[2]);
+void Vertex2sv(GLshort v[2]);
+void Vertex3dv(GLdouble v[3]);
 void Vertex3fv(GLfloat v[3]);
-void Vertex3iv(GLint *v);
-void Vertex3sv(GLshort *v);
-void Vertex4dv(GLdouble *v);
-void Vertex4fv(GLfloat *v);
-void Vertex4iv(GLint *v);
-void Vertex4sv(GLshort *v);
+void Vertex3iv(GLint v[3]);
+void Vertex3sv(GLshort v[3]);
+void Vertex4dv(GLdouble v[4]);
+void Vertex4fv(GLfloat v[4]);
+void Vertex4iv(GLint v[4]);
+void Vertex4sv(GLshort v[4]);
 void Normal3b(GLbyte nx, GLbyte ny, GLbyte nz);
 void Normal3d(GLdouble nx, GLdouble ny, GLdouble nz);
 void Normal3f(GLfloat nx, GLfloat ny, GLfloat nz);
 void Normal3i(GLint nx, GLint ny, GLint nz);
 void Normal3s(GLshort nx, GLshort ny, GLshort nz);
-void Normal3bv(GLbyte *v);
-void Normal3dv(GLdouble *v);
-void Normal3fv(GLfloat *v);
-void Normal3iv(GLint *v);
-void Normal3sv(GLshort *v);
+void Normal3bv(GLbyte v[3]);
+void Normal3dv(GLdouble v[3]);
+void Normal3fv(GLfloat v[3]);
+void Normal3iv(GLint v[3]);
+void Normal3sv(GLshort v[3]);
 void Indexd(GLdouble c);
 void Indexf(GLfloat c);
 void Indexi(GLint c);
 void Indexs(GLshort c);
 void Indexub(GLubyte c);  /* 1.1 */
-/*
-void Indexdv(GLdouble *c);
-void Indexfv(GLfloat *c);
-void Indexiv(GLint *c);
-void Indexsv(GLshort *c);
-*/
-/* void Indexubv(GLubyte *c); */ /* 1.1 */
+void Indexdv(GLdouble c[1]);
+void Indexfv(GLfloat c[1]);
+void Indexiv(GLint c[1]);
+void Indexsv(GLshort c[1]);
+void Indexubv(GLubyte c[1]); /* 1.1 */
 void Color3b(GLbyte red, GLbyte green, GLbyte blue);
 void Color3d(GLdouble red, GLdouble green, GLdouble blue);
 void Color3f(GLfloat red, GLfloat green, GLfloat blue);
@@ -810,7 +802,6 @@ void TexCoord1d(GLdouble s);
 void TexCoord1f(GLfloat s);
 void TexCoord1i(GLint s);
 void TexCoord1s(GLshort s);
-/*
 void TexCoord2d(GLdouble s, GLdouble t);
 void TexCoord2f(GLfloat s, GLfloat t);
 void TexCoord2i(GLint s, GLint t);
@@ -823,22 +814,22 @@ void TexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble q);
 void TexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
 void TexCoord4i(GLint s, GLint t, GLint r, GLint q);
 void TexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q);
-void TexCoord1dv(GLdouble *v);
-void TexCoord1fv(GLfloat *v);
-void TexCoord1iv(GLint *v);
-void TexCoord1sv(GLshort *v);
-void TexCoord2dv(GLdouble *v);
-void TexCoord2fv(GLfloat *v);
-void TexCoord2iv(GLint *v);
-void TexCoord2sv(GLshort *v);
-void TexCoord3dv(GLdouble *v);
-void TexCoord3fv(GLfloat *v);
-void TexCoord3iv(GLint *v);
-void TexCoord3sv(GLshort *v);
-void TexCoord4dv(GLdouble *v);
-void TexCoord4fv(GLfloat *v);
-void TexCoord4iv(GLint *v);
-void TexCoord4sv(GLshort *v);
+void TexCoord1dv(GLdouble v[1]);
+void TexCoord1fv(GLfloat v[1]);
+void TexCoord1iv(GLint v[1]);
+void TexCoord1sv(GLshort v[1]);
+void TexCoord2dv(GLdouble v[2]);
+void TexCoord2fv(GLfloat v[2]);
+void TexCoord2iv(GLint v[2]);
+void TexCoord2sv(GLshort v[2]);
+void TexCoord3dv(GLdouble v[3]);
+void TexCoord3fv(GLfloat v[3]);
+void TexCoord3iv(GLint v[3]);
+void TexCoord3sv(GLshort v[3]);
+void TexCoord4dv(GLdouble v[4]);
+void TexCoord4fv(GLfloat v[4]);
+void TexCoord4iv(GLint v[4]);
+void TexCoord4sv(GLshort v[4]);
 void RasterPos2d(GLdouble x, GLdouble y);
 void RasterPos2f(GLfloat x, GLfloat y);
 void RasterPos2i(GLint x, GLint y);
@@ -851,27 +842,26 @@ void RasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
 void RasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
 void RasterPos4i(GLint x, GLint y, GLint z, GLint w);
 void RasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w);
-void RasterPos2dv(GLdouble *v);
-void RasterPos2fv(GLfloat *v);
-void RasterPos2iv(GLint *v);
-void RasterPos2sv(GLshort *v);
-void RasterPos3dv(GLdouble *v);
-void RasterPos3fv(GLfloat *v);
-void RasterPos3iv(GLint *v);
-void RasterPos3sv(GLshort *v);
-void RasterPos4dv(GLdouble *v);
-void RasterPos4fv(GLfloat *v);
-void RasterPos4iv(GLint *v);
-void RasterPos4sv(GLshort *v);
+void RasterPos2dv(GLdouble v[2]);
+void RasterPos2fv(GLfloat v[2]);
+void RasterPos2iv(GLint v[2]);
+void RasterPos2sv(GLshort v[2]);
+void RasterPos3dv(GLdouble v[3]);
+void RasterPos3fv(GLfloat v[3]);
+void RasterPos3iv(GLint v[3]);
+void RasterPos3sv(GLshort v[3]);
+void RasterPos4dv(GLdouble v[4]);
+void RasterPos4fv(GLfloat v[4]);
+void RasterPos4iv(GLint v[4]);
+void RasterPos4sv(GLshort v[4]);
 void Rectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
 void Rectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
 void Recti(GLint x1, GLint y1, GLint x2, GLint y2);
 void Rects(GLshort x1, GLshort y1, GLshort x2, GLshort y2);
-void Rectdv(GLdouble *v1, GLdouble *v2);
-void Rectfv(GLfloat *v1, GLfloat *v2);
-void Rectiv(GLint *v1, GLint *v2);
-void Rectsv(GLshort *v1, GLshort *v2);
-*/
+void Rectdv(GLdouble v1[2], GLdouble v2[2]);
+void Rectfv(GLfloat v1[2], GLfloat v2[2]);
+void Rectiv(GLint v1[2], GLint v2[2]);
+void Rectsv(GLshort v1[2], GLshort v2[2]);
 
 /* Lighting */
 void ShadeModel(GLenum mode);
@@ -879,10 +869,8 @@ void Lightf(GLenum light, GLenum pname, GLfloat param);
 void Lighti(GLenum light, GLenum pname, GLint param);
 void Lightfv(GLenum light, GLenum pname, GLfloat *params);
 void Lightiv(GLenum light, GLenum pname, GLint *params);
-/*
 void GetLightfv(GLenum light, GLenum pname, GLfloat *params);
 void GetLightiv(GLenum light, GLenum pname, GLint *params);
-*/
 void LightModelf(GLenum pname, GLfloat param);
 void LightModeli(GLenum pname, GLint param);
 void LightModelfv(GLenum pname, GLfloat *params);
@@ -891,14 +879,11 @@ void Materialf(GLenum face, GLenum pname, GLfloat param);
 void Materiali(GLenum face, GLenum pname, GLint param);
 void Materialfv(GLenum face, GLenum pname, GLfloat *params);
 void Materialiv(GLenum face, GLenum pname, GLint *params);
-/*
 void GetMaterialfv(GLenum face, GLenum pname, GLfloat *params);
 void GetMaterialiv(GLenum face, GLenum pname, GLint *params);
 void ColorMaterial(GLenum face, GLenum mode);
-*/
 
 /* Raster functions */
-/*
 void PixelZoom(GLfloat xfactor, GLfloat yfactor);
 void PixelStoref(GLenum pname, GLfloat param);
 void PixelStorei(GLenum pname, GLint param);
@@ -907,14 +892,15 @@ void PixelTransferi(GLenum pname, GLint param);
 void PixelMapfv(GLenum map, GLint mapsize, GLfloat *values);
 void PixelMapuiv(GLenum map, GLint mapsize, GLuint *values);
 void PixelMapusv(GLenum map, GLint mapsize, GLushort *values);
+/*
 void GetPixelMapfv(GLenum map, GLfloat *values);
 void GetPixelMapuiv(GLenum map, GLuint *values);
 void GetPixelMapusv(GLenum map, GLushort *values);
 void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, GLubyte *bitmap);
 void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid *pixels);
+*/
 void DrawPixels(GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid *pixels);
 void CopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum type);
-*/
 
 /* Stenciling */
 void StencilFunc(GLenum func, GLint ref, GLuint mask);
@@ -926,10 +912,10 @@ void ClearStencil(GLint s);
 void TexGend(GLenum coord, GLenum pname, GLdouble param);
 void TexGenf(GLenum coord, GLenum pname, GLfloat param);
 void TexGeni(GLenum coord, GLenum pname, GLint param);
-/*
 void TexGendv(GLenum coord, GLenum pname, GLdouble *params);
 void TexGenfv(GLenum coord, GLenum pname, GLfloat *params);
 void TexGeniv(GLenum coord, GLenum pname, GLint *params);
+/*
 void GetTexGendv(GLenum coord, GLenum pname, GLdouble *params);
 void GetTexGenfv(GLenum coord, GLenum pname, GLfloat *params);
 void GetTexGeniv(GLenum coord, GLenum pname, GLint *params);
@@ -942,15 +928,15 @@ void GetTexEnviv(GLenum target, GLenum pname, GLint *params);
 */
 void TexParameterf(GLenum target, GLenum pname, GLfloat param);
 void TexParameteri(GLenum target, GLenum pname, GLint param);
-/*
 void TexParameterfv(GLenum target, GLenum pname, GLfloat *params);
 void TexParameteriv(GLenum target, GLenum pname, GLint *params);
+/*
 void GetTexParameterfv(GLenum target, GLenum pname, GLfloat *params);
 void GetTexParameteriv(GLenum target, GLenum pname, GLint *params);
 void GetTexLevelParameterfv(GLenum target, GLint level, GLenum pname, GLfloat *params);
 void GetTexLevelParameteriv(GLenum target, GLint level, GLenum pname, GLint *params);
-void TexImage1D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLint border, GLenum format, GLenum type, GLvoid *pixels);
 */
+void TexImage1D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLint border, GLenum format, GLenum type, GLvoid *pixels);
 void TexImage2D(GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, GLvoid *pixels);
 /*
 void GetTexImage(GLenum target, GLint level, GLenum format, GLenum type, GLvoid *pixels);
@@ -986,24 +972,21 @@ void EvalMesh2(GLenum mode, GLint i1, GLint i2, GLint j1, GLint j2);
 /* Fog */
 void Fogf(GLenum pname, GLfloat param);
 void Fogi(GLenum pname, GLint param);
-/*
 void Fogfv(GLenum pname, GLfloat *params);
 void Fogiv(GLenum pname, GLint *params);
-*/
 
 /* Selection and Feedback */
 /*
 void FeedbackBuffer(GLsizei size, GLenum type, GLfloat *buffer);
 void PassThrough(GLfloat token);
 void SelectBuffer(GLsizei size, GLuint *buffer);
+*/
 void InitNames(void);
 void LoadName(GLuint name);
 void PushName(GLuint name);
 void PopName(void);
-*/
 
 /* 1.1 functions */
-
 /* texture objects */
 void GenTextures(GLsizei n, struct textures *textures);
 void DeleteTextures(GLsizei n, struct textures *textures);
@@ -1014,14 +997,13 @@ GLboolean AreTexturesResident(GLsizei n, GLuint *textures, GLboolean *residences
 GLboolean IsTexture(GLuint texture);
 */
 /* texture mapping */
-/*
 void TexSubImage1D(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, GLvoid *pixels);
 void TexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid *pixels);
 void CopyTexImage1D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLint border);
 void CopyTexImage2D(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
 void CopyTexSubImage1D(GLenum target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
 void CopyTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-*/
+
 /* vertex arrays */
 /*
 void VertexPointer(GLint size, GLenum type, GLsizei stride, GLvoid *ptr);

@@ -32,6 +32,12 @@ SWIG_TYPEMAP_NUM_ARR(ubyte,unsigned char);
 %apply (int, int, float INPUT[ANY]) {(int, int, float [4])};
 %apply (int, int, int INPUT[ANY]) {(int, int, int [4])};
 %apply (int, unsigned int INPUT[ANY]) {(int, unsigned int * )};
+%apply (unsigned int, double OUTPUT[ANY]) {(unsigned int, double *)};
+%apply (unsigned int, float OUTPUT[ANY]) {(unsigned int, float *)};
+%apply (unsigned int, int OUTPUT[ANY]) {(unsigned int, int *)};
+%apply (unsigned int, unsigned char OUTPUT[ANY]) {(unsigned int, unsigned char *)};
+%apply (unsigned int, unsigned int, float OUTPUT[ANY]) {(unsigned int, unsigned int, float *)};
+%apply (unsigned int, unsigned int, int OUTPUT[ANY]) {(unsigned int, unsigned int, int *)};
 
 %{
 #undef SWIG_init_user

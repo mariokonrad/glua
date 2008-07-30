@@ -1,0 +1,432 @@
+<html><head><style type="text/css">
+pre.shell { background:#d0d0d0; }
+pre.src { background:#e0e0e0; }
+ul.toc { list-style-type:none; }
+ul.toc ul { list-style-type:none; }
+h1 { font-family:sans-serif; }
+h2 { font-family:sans-serif; }
+h3 { font-family:sans-serif; }
+</style></head><body>
+
+
+
+<h1>glua</h1>
+<h2>Table of Contents</h2>
+<ul class="toc">
+	<li>1. <a href="#s_1">Description</a><ul>
+		<li>1.1 <a href="#s_1_1">Introduction</a></li>
+		<li>1.2 <a href="#s_1_2">OpenGL Support</a></li>
+		<li>1.3 <a href="#s_1_3">GLU Support</a></li>
+		<li>1.4 <a href="#s_1_4">GLUT Support</a></li>
+		<li>1.5 <a href="#s_1_5">Miscellaneous</a></li>
+		</ul></li>
+	<li>2. <a href="#s_2">Usage</a></li>
+	<li>3. <a href="#s_3">Examples</a><ul>
+		<li>3.1 <a href="#s_3_1">Simple</a></li>
+		<li>3.2 <a href="#s_3_2">Earth and Moon</a></li>
+		</ul></li>
+	<li>4. <a href="#s_4">Download</a></li>
+	<li>5. <a href="#s_5">Build</a></li>
+</ul>
+
+<h2 id="s_1">1. Description</h2>
+<p>This chapter gives an overview of the tool and what it supports,
+	regarding OpenGL, GLU and GLUT.</p>
+
+<h3 id="s_1_1">1.1 Introduction</h3>
+<p>This tool is to play with OpenGL, without having to compile every
+	single bit. It is certainly not optimized to maximum speed, nor
+	does it implement the latest and greatest standard.</p>
+<p>For beginners and their first steps it may be helpful.</p>
+<p>Supported are many of the functions of OpenGL 1.1, GLU (GL utility),
+	and GLUT (GL utility toolkit).</p>
+
+<h3>1.2 OpenGL Support</h3>
+<p>All of the following GLUT function are supported. This list contains
+	the original names given by OpenGL.</p>
+<p>The namespace within the script is <tt>gl</tt> and the functions
+	themselfs have no prefix <tt>glut</tt>. Example: using the function
+	<tt>glBegin</tt> within the script is changed to
+	<tt>gl.Begin</tt>.</p>
+<ul>
+	<li>glClearIndex</li>
+	<li>glClearColor</li>
+	<li>glClear</li>
+	<li>glIndexMask</li>
+	<li>glColorMask</li>
+	<li>glAlphaFunc</li>
+	<li>glBlendFunc</li>
+	<li>glLogicOp</li>
+	<li>glCullFace</li>
+	<li>glFrontFace</li>
+	<li>glPointSize</li>
+	<li>glLineWidth</li>
+	<li>glLineStipple</li>
+	<li>glPolygonMode</li>
+	<li>glPolygonOffset</li>
+	<li>glEdgeFlag</li>
+	<li>glScissor</li>
+	<li>glClipPlane</li>
+	<li>glGetClipPlane</li>
+	<li>glDrawBuffer</li>
+	<li>glReadBuffer</li>
+	<li>glEnable</li>
+	<li>glDisable</li>
+	<li>glIsEnabled</li>
+	<li>glEnableClientState</li>
+	<li>glDisableClientState</li>
+	<li>glGetBooleanv</li>
+	<li>glGetDoublev</li>
+	<li>glGetFloatv</li>
+	<li>glGetIntegerv</li>
+	<li>glPushAttrib</li>
+	<li>glPopAttrib</li>
+	<li>glPushClientAttrib</li>
+	<li>glPopClientAttrib</li>
+	<li>glRenderMode</li>
+	<li>glGetError</li>
+	<li>glFinish</li>
+	<li>glFlush</li>
+	<li>glHint</li>
+	<li>glClearDepth</li>
+	<li>glDepthFunc</li>
+	<li>glDepthMask</li>
+	<li>glDepthRange</li>
+	<li>glClearAccum</li>
+	<li>glAccum</li>
+	<li>glMatrixMode</li>
+	<li>glOrtho</li>
+	<li>glFrustum</li>
+	<li>glViewport</li>
+	<li>glPushMatrix</li>
+	<li>glPopMatrix</li>
+	<li>glLoadIdentity</li>
+	<li>glLoadMatrixd</li>
+	<li>glLoadMatrixf</li>
+	<li>glMultMatrixd</li>
+	<li>glMultMatrixf</li>
+	<li>glRotated</li>
+	<li>glRotatef</li>
+	<li>glScaled</li>
+	<li>glScalef</li>
+	<li>glTranslated</li>
+	<li>glTranslatef</li>
+	<li>glIsList</li>
+	<li>glDeleteLists</li>
+	<li>glGenLists</li>
+	<li>glNewList</li>
+	<li>glEndList</li>
+	<li>glCallList</li>
+	<li>glCallLists</li>
+	<li>glListBase</li>
+	<li>glBegin</li>
+	<li>glEnd</li>
+	<li>glVertex2d</li>
+	<li>glVertex2f</li>
+	<li>glVertex2i</li>
+	<li>glVertex2s</li>
+	<li>glVertex3d</li>
+	<li>glVertex3f</li>
+	<li>glVertex3i</li>
+	<li>glVertex3s</li>
+	<li>glVertex4d</li>
+	<li>glVertex4f</li>
+	<li>glVertex4i</li>
+	<li>glVertex4s</li>
+	<li>glVertex2dv</li>
+	<li>glVertex2fv</li>
+	<li>glVertex2iv</li>
+	<li>glVertex2sv</li>
+	<li>glVertex3dv</li>
+	<li>glVertex3fv</li>
+	<li>glVertex3iv</li>
+	<li>glVertex3sv</li>
+	<li>glVertex4dv</li>
+	<li>glVertex4fv</li>
+	<li>glVertex4iv</li>
+	<li>glVertex4sv</li>
+	<li>glNormal3b</li>
+	<li>glNormal3d</li>
+	<li>glNormal3f</li>
+	<li>glNormal3i</li>
+	<li>glNormal3s</li>
+	<li>glNormal3bv</li>
+	<li>glNormal3dv</li>
+	<li>glNormal3fv</li>
+	<li>glNormal3iv</li>
+	<li>glNormal3sv</li>
+	<li>glIndexd</li>
+	<li>glIndexf</li>
+	<li>glIndexi</li>
+	<li>glIndexs</li>
+	<li>glIndexub</li>
+	<li>glIndexdv</li>
+	<li>glIndexfv</li>
+	<li>glIndexiv</li>
+	<li>glIndexsv</li>
+	<li>glIndexubv</li>
+	<li>glColor3b</li>
+	<li>glColor3d</li>
+	<li>glColor3f</li>
+	<li>glColor3i</li>
+	<li>glColor3s</li>
+	<li>glColor3ub</li>
+	<li>glColor3ui</li>
+	<li>glColor3us</li>
+	<li>glColor4b</li>
+	<li>glColor4d</li>
+	<li>glColor4f</li>
+	<li>glColor4i</li>
+	<li>glColor4s</li>
+	<li>glColor4ub</li>
+	<li>glColor4ui</li>
+	<li>glColor4us</li>
+	<li>glColor3bv</li>
+	<li>glColor3dv</li>
+	<li>glColor3fv</li>
+	<li>glColor3iv</li>
+	<li>glColor3sv</li>
+	<li>glColor3ubv</li>
+	<li>glColor3uiv</li>
+	<li>glColor3usv</li>
+	<li>glColor4bv</li>
+	<li>glColor4dv</li>
+	<li>glColor4fv</li>
+	<li>glColor4iv</li>
+	<li>glColor4sv</li>
+	<li>glColor4ubv</li>
+	<li>glColor4uiv</li>
+	<li>glColor4usv</li>
+	<li>glTexCoord1d</li>
+	<li>glTexCoord1f</li>
+	<li>glTexCoord1i</li>
+	<li>glTexCoord1s</li>
+	<li>glTexCoord2d</li>
+	<li>glTexCoord2f</li>
+	<li>glTexCoord2i</li>
+	<li>glTexCoord2s</li>
+	<li>glTexCoord3d</li>
+	<li>glTexCoord3f</li>
+	<li>glTexCoord3i</li>
+	<li>glTexCoord3s</li>
+	<li>glTexCoord4d</li>
+	<li>glTexCoord4f</li>
+	<li>glTexCoord4i</li>
+	<li>glTexCoord4s</li>
+	<li>glTexCoord1dv</li>
+	<li>glTexCoord1fv</li>
+	<li>glTexCoord1iv</li>
+	<li>glTexCoord1sv</li>
+	<li>glTexCoord2dv</li>
+	<li>glTexCoord2fv</li>
+	<li>glTexCoord2iv</li>
+	<li>glTexCoord2sv</li>
+	<li>glTexCoord3dv</li>
+	<li>glTexCoord3fv</li>
+	<li>glTexCoord3iv</li>
+	<li>glTexCoord3sv</li>
+	<li>glTexCoord4dv</li>
+	<li>glTexCoord4fv</li>
+	<li>glTexCoord4iv</li>
+	<li>glTexCoord4sv</li>
+	<li>glRasterPos2d</li>
+	<li>glRasterPos2f</li>
+	<li>glRasterPos2i</li>
+	<li>glRasterPos2s</li>
+	<li>glRasterPos3d</li>
+	<li>glRasterPos3f</li>
+	<li>glRasterPos3i</li>
+	<li>glRasterPos3s</li>
+	<li>glRasterPos4d</li>
+	<li>glRasterPos4f</li>
+	<li>glRasterPos4i</li>
+	<li>glRasterPos4s</li>
+	<li>glRasterPos2dv</li>
+	<li>glRasterPos2fv</li>
+	<li>glRasterPos2iv</li>
+	<li>glRasterPos2sv</li>
+	<li>glRasterPos3dv</li>
+	<li>glRasterPos3fv</li>
+	<li>glRasterPos3iv</li>
+	<li>glRasterPos3sv</li>
+	<li>glRasterPos4dv</li>
+	<li>glRasterPos4fv</li>
+	<li>glRasterPos4iv</li>
+	<li>glRasterPos4sv</li>
+	<li>glRectd</li>
+	<li>glRectf</li>
+	<li>glRecti</li>
+	<li>glRects</li>
+	<li>glRectdv</li>
+	<li>glRectfv</li>
+	<li>glRectiv</li>
+	<li>glRectsv</li>
+	<li>glShadeModel</li>
+	<li>glLightf</li>
+	<li>glLighti</li>
+	<li>glLightfv</li>
+	<li>glLightiv</li>
+	<li>glGetLightfv</li>
+	<li>glGetLightiv</li>
+	<li>glLightModelf</li>
+	<li>glLightModeli</li>
+	<li>glLightModelfv</li>
+	<li>glLightModeliv</li>
+	<li>glMaterialf</li>
+	<li>glMateriali</li>
+	<li>glMaterialfv</li>
+	<li>glMaterialiv</li>
+	<li>glGetMaterialfv</li>
+	<li>glGetMaterialiv</li>
+	<li>glColorMaterial</li>
+	<li>glPixelZoom</li>
+	<li>glPixelStoref</li>
+	<li>glPixelStorei</li>
+	<li>glPixelTransferf</li>
+	<li>glPixelTransferi</li>
+	<li>glPixelMapfv</li>
+	<li>glPixelMapuiv</li>
+	<li>glPixelMapusv</li>
+	<li>glDrawPixels</li>
+	<li>glCopyPixels</li>
+	<li>glStencilFunc</li>
+	<li>glStencilMask</li>
+	<li>glStencilOp</li>
+	<li>glClearStencil</li>
+	<li>glTexGend</li>
+	<li>glTexGenf</li>
+	<li>glTexGeni</li>
+	<li>glTexGendv</li>
+	<li>glTexGenfv</li>
+	<li>glTexGeniv</li>
+	<li>glTexParameterf</li>
+	<li>glTexParameteri</li>
+	<li>glTexParameterfv</li>
+	<li>glTexParameteriv</li>
+	<li>glTexImage1D</li>
+	<li>glTexImage2D</li>
+	<li>glFogf</li>
+	<li>glFogi</li>
+	<li>glFogfv</li>
+	<li>glFogiv</li>
+	<li>glInitNames</li>
+	<li>glLoadName</li>
+	<li>glPushName</li>
+	<li>glPopName</li>
+	<li>glGenTextures</li>
+	<li>glDeleteTextures</li>
+	<li>glBindTexture</li>
+	<li>glTexSubImage1D</li>
+	<li>glTexSubImage2D</li>
+	<li>glCopyTexImage1D</li>
+	<li>glCopyTexImage2D</li>
+	<li>glCopyTexSubImage1D</li>
+	<li>glCopyTexSubImage2D</li>
+</ul>
+
+<h3 id="s_1_3">1.3 GLU Support</h3>
+<p>All of the following GLUT function are supported. This list contains
+	the original names given by GLU.</p>
+<p>The namespace within the script is <tt>glu</tt> and the functions
+	themselfs have no prefix <tt>glut</tt>. Example: using the function
+	<tt>gluLookAt</tt> within the script is changed to
+	<tt>glu.LookAt</tt>.</p>
+<ul>
+	<li>gluPerspective</li>
+	<li>gluLookAt</li>
+	<li>gluNewQuadric</li>
+	<li>gluDeleteQuadric</li>
+	<li>gluSphere</li>
+	<li>gluQuadricNormals</li>
+	<li>gluQuadricTexture</li>
+</ul>
+
+<h3 id="s_1_4">1.4 GLUT Support</h3>
+<p>All of the following GLUT function are supported. This list contains
+	the original names given by GLUT.</p>
+<p>The namespace within the script is <tt>glut</tt> and the functions
+	themselfs have no prefix <tt>glut</tt>. Example: using the function
+	<tt>glutInitWindowSize</tt> within the script is changed to
+	<tt>glut.InitWindowSize</tt>.</p>
+<ul>
+	<li>glutRegisterCallback</li>
+	<li>glutInitWindowSize</li>
+	<li>glutInitWindowPosition</li>
+	<li>glutInitDisplayMode</li>
+	<li>glutCreateWindow</li>
+	<li>glutDisplayFunc</li>
+	<li>glutReshapeFunc</li>
+	<li>glutKeyboardFunc</li>
+	<li>glutMouseFunc</li>
+	<li>glutMotionFunc</li>
+	<li>glutIdleFunc</li>
+	<li>glutSpecialFunc</li>
+	<li>glutMainLoop</li>
+	<li>glutSwapBuffers</li>
+	<li>glutPostRedisplay</li>
+	<li>glutReshapeWindow</li>
+	<li>glutPositionWindow</li>
+	<li>glutFullScreen</li>
+	<li>glutWireSphere</li>
+	<li>glutWireCube</li>
+	<li>glutWireCone</li>
+	<li>glutWireTorus</li>
+	<li>glutWireDodecahedron</li>
+	<li>glutWireTeapot</li>
+	<li>glutWireOctahedron</li>
+	<li>glutWireTetrahedron</li>
+	<li>glutWireIcosahedron</li>
+	<li>glutSolidSphere</li>
+	<li>glutSolidCube</li>
+	<li>glutSolidCone</li>
+	<li>glutSolidTorus</li>
+	<li>glutSolidDodecahedron</li>
+	<li>glutSolidTeapot</li>
+	<li>glutSolidOctahedron</li>
+	<li>glutSolidTetrahedron</li>
+	<li>glutSolidIcosahedron</li>
+</ul>
+
+<h3 id="s_1_5">1.5 Miscellaneous</h3>
+<p>There are other functions provided to be used within scripts:</p>
+<ul>
+	<li>img.load_bmp</li>
+	<li>img.free_img</li>
+</ul>
+
+<h2 id="s_2">2. Usage</h2>
+<p>Just start the program with the script you like to execute as parameter:</p>
+<pre class="shell">$ glua example1.lua</pre>
+
+<h2 id="s_3">3. Examples</h2>
+<!-- TODO -->
+
+<h3 id="s_3_1">3.1 Simple</h3>
+<!-- TODO -->
+
+<h3 id="s_3_2">3.2 Earth and Moon</h3>
+<!-- TODO -->
+
+<h2 id="s_4">4. Download</h2>
+<p>All source code provided by this page is distributed unter the terms of the
+	<a href="http://www.gnu.org/licenses/licenses.html#GPL">GPL2</a>.</p>
+<p>There is absolutely no warranty, download and running the program
+	at your own risk.</p>
+<p>This source distribution does not include any OpenGL, GLU or GLUT
+	components. It does contain the complete LUA stuff.</p>
+<ul>
+	<li>Source: <a href="">glua-1.0.0.tgz</a></li>
+</ul>
+
+<h2 id="s_5">5. Build</h2>
+<p>Unfortunately, the build does not utilize the GNU autotools. However,
+	the build was tested under Cygwin and Linux (Kubuntu 8.04).</p>
+<p>To build under Linux:</p>
+<pre class="shell">$ make linux</pre>
+<p>To build under Cygwin:</p>
+<pre class="shell">$ make cygwin</pre>
+<p>All developer packages for OpenGL, GLU and GLUT have to be installed.</p>
+
+
+
+</body></html>

@@ -1,9 +1,26 @@
 #ifndef __GLUT__H__
 #define __GLUT__H__
 
-#define _RGBA   0x00000001
-#define _DOUBLE 0x00000002
-#define _DEPTH  0x00000004
+/* Display mode bit masks. */
+#define _RGB			0
+#define _RGBA			_RGB
+#define _INDEX			1
+#define _SINGLE			0
+#define _DOUBLE			2
+#define _ACCUM			4
+#define _ALPHA			8
+#define _DEPTH			16
+#define _STENCIL		32
+
+/* Mouse buttons. */
+#define _LEFT_BUTTON		0
+#define _MIDDLE_BUTTON		1
+#define _RIGHT_BUTTON		2
+
+/* Mouse button  state. */
+#define _DOWN			0
+#define _UP				1
+
 
 void RegisterCallback(void);
 void InitWindowSize(int, int);

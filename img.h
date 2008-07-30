@@ -11,8 +11,8 @@ struct image {
 struct image * load_bmp(const char *);
 void free_img(struct image *);
 
-int width(struct image *);
-int height(struct image *);
-void * data(struct image *);
+int image_width(struct image * p);
+int image_height(struct image * p);
+void * image_data(struct image * p);
 
 #endif

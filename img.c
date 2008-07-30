@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <stdlib.h>
 
 #define BMP 19778
 
@@ -115,12 +114,12 @@ void free_img(struct image * p)
     }
 }
 
-int width(struct image * p)
+int image_width(struct image * p)
 { return p->width; }
 
-int height(struct image * p)
+int image_height(struct image * p)
 { return p->height; }
 
-void * data(struct image * p)
+void * image_data(struct image * p)
 { return p->data; }
 

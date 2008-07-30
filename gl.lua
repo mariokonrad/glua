@@ -1,33 +1,48 @@
 
 tex = gl.textures()
-phi = 0.0
-img1 = nil
-tex1 = nil
-quad = nil
+
+phi_earth = 0.0
+img_earth = nil
+tex_earth = nil
+quad_earth = nil
+
+phi_earth_moon = 0.0
+
+phi_moon = 0.0
+img_moon = nil
+tex_moon = nil
+quad_moon = nil
 
 display = function()
 	gl.Clear(gl._COLOR_BUFFER_BIT + gl._DEPTH_BUFFER_BIT)
 	gl.LoadIdentity()
-    gl.Translatef(0.0, 0.0, -10.0)
+	glu.LookAt(
+		0.0, -20.0, 20.0,
+		0.0,   0.0,  0.0,
+		0.0,   1.0,  0.0
+		)
 
-	-- static sphere
-	gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
-	gl.PushMatrix()
-		gl.BindTexture(gl._TEXTURE_2D, tex1)
-		gl.Rotatef(phi, 1.0, 1.0, 1.0)
-		glu.Sphere(quad, 4.0, 32, 32)
-	gl.PopMatrix()
+	-- earth
+	if quad_earth then
+		gl.PushMatrix()
+		gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
+		gl.BindTexture(gl._TEXTURE_2D, tex_earth)
+		gl.Rotatef(phi_earth, 0.0, 0.0, 1.0)
+		glu.Sphere(quad_earth, 4.0, 32, 32)
+		gl.PopMatrix()
+	end
 
-	-- triangle
-    gl.Rotatef(phi, 0.0, 1.0, 0.0)
-	gl.Begin(gl._TRIANGLES)
-        gl.Color4fv({1.0, 0.0, 0.0, 1.0})
-        gl.Vertex3fv({0.0, 0.0, 0.0})
-        gl.Color4fv({0.0, 1.0, 0.0, 1.0})
-        gl.Vertex3fv({5.0, 0.0, 0.0})
-        gl.Color4fv({0.0, 0.0, 1.0, 1.0})
-        gl.Vertex3fv({0.0, 5.0, 5.0})
-	gl.End()
+	-- moon
+	if quad_moon then
+		gl.PushMatrix()
+		gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
+		gl.Rotatef(phi_earth_moon, 0.0, 0.0, 1.0)
+		gl.Translatef(10.0, 0.0, 0.0)
+		gl.BindTexture(gl._TEXTURE_2D, tex_moon)
+		gl.Rotatef(phi_moon, 1.0, 1.0, 1.0)
+		glu.Sphere(quad_moon, 2.0, 32, 32)
+		gl.PopMatrix()
+	end
 
 	gl.Flush()
 	glut.SwapBuffers()
@@ -37,7 +52,7 @@ reshape = function(w, h)
 	gl.Viewport(0, 0, w, h)
 	gl.MatrixMode(gl._PROJECTION)
 	gl.LoadIdentity()
-    glu.Perspective(90.0, w/h, 0.1, 100.0)
+    glu.Perspective(60.0, w/h, 0.1, 100.0)
 	gl.MatrixMode(gl._MODELVIEW)
 end
 
@@ -54,16 +69,14 @@ motion = function(x, y)
 end
 
 idle = function()
-    phi = phi + 1.0
-    if phi >= 360.0 then phi = 0.0 end
+    phi_earth = math.fmod(phi_earth + 1.0, 360.0)
+	phi_moon = math.fmod(phi_moon + 0.0357, 360.0)
+	phi_earth_moon = math.fmod(phi_earth_moon + 0.0357, 360.0)
     glut.PostRedisplay()
 end
 
-special = function(k, x, y)
-	print('special  k=' .. k .. '  x=' .. x .. '  y=' .. y)
-end
-
-img1 = img.load_bmp('earth.bmp')
+img_earth = img.load_bmp('earth.bmp')
+img_moon = img.load_bmp('moon.bmp')
 
 glut.InitWindowSize(600, 400)
 glut.InitDisplayMode(glut._RGBA + glut._DOUBLE + glut._DEPTH)
@@ -76,7 +89,7 @@ glut.KeyboardFunc('keyboard')
 glut.MouseFunc('mouse')
 glut.MotionFunc('motion')
 glut.IdleFunc('idle')
-gl.ClearColor(0.2, 0.2, 0.2, 1.0)
+gl.ClearColor(0.1, 0.1, 0.1, 1.0)
 gl.ClearDepth(1.0)
 gl.Enable(gl._DEPTH_TEST)
 gl.Enable(gl._NORMALIZE)
@@ -86,18 +99,33 @@ gl.CullFace(gl._BACK)
 gl.FrontFace(gl._CCW)
 gl.PolygonMode(gl._FRONT_AND_BACK, gl._FILL)
 
-gl.GenTextures(1, tex)
-tex1 = gl.tex(tex, 0)
-gl.BindTexture(gl._TEXTURE_2D, tex1)
-gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.width(img1), img.height(img1), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.data(img1))
+gl.GenTextures(2, tex)
+
+tex_earth = gl.tex(tex, 0)
+gl.BindTexture(gl._TEXTURE_2D, tex_earth)
+gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_earth), img.image_height(img_earth), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.image_data(img_earth))
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
 
-quad = glu.NewQuadric()
-glu.QuadricNormals(quad, glu._SMOOTH)
-glu.QuadricTexture(quad, glu._TRUE)
+tex_moon = gl.tex(tex, 1)
+gl.BindTexture(gl._TEXTURE_2D, tex_moon)
+gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_moon), img.image_height(img_moon), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.image_data(img_moon))
+gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
+gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
+
+quad_earth = glu.NewQuadric()
+glu.QuadricNormals(quad_earth, glu._SMOOTH)
+glu.QuadricTexture(quad_earth, glu._TRUE)
+
+quad_moon = glu.NewQuadric()
+glu.QuadricNormals(quad_moon, glu._SMOOTH)
+glu.QuadricTexture(quad_moon, glu._TRUE)
 
 glut.MainLoop()
 
-img.free_img(img1)
+glu.DeleteQuadric(quad_moon)
+glu.DeleteQuadric(quad_earth)
+gl.DeleteTextures(2, tex)
+img.free_img(img_earth)
+img.free_img(img_moon)
 
