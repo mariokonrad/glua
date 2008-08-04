@@ -9,6 +9,7 @@ extern int luaopen_gl(lua_State* L);
 extern int luaopen_glu(lua_State* L);
 extern int luaopen_glut(lua_State* L);
 extern int luaopen_img(lua_State* L);
+extern int luaopen_util(lua_State* L);
 extern void register_lua(lua_State * lua);
 
 static jmp_buf env;
@@ -34,6 +35,7 @@ int main(int argc, char ** argv)
 	luaopen_glu(L);
 	luaopen_glut(L);
 	luaopen_img(L);
+	luaopen_util(L);
 	register_lua(L);
 	lua_atpanic(L, panic);
 	if (setjmp(env) == 0) {

@@ -1,5 +1,6 @@
 #include "gl.h"
 #include <GL/gl.h>
+#include <stdlib.h>
 
 void ClearIndex(float c)
 { glClearIndex(c); }

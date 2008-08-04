@@ -1,15 +1,7 @@
 #include "glu.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-
-static unsigned int glumap(unsigned int v)
-{
-#if defined(FAST_CONV)
-	return v;
-#else
-	/* TODO */
-#endif
-}
+#include <stdlib.h>
 
 void Perspective(float fov, float ratio, float near, float far)
 {
@@ -47,7 +39,7 @@ void Sphere(struct quadric * q, double r, int sl, int st)
 
 void QuadricNormals(struct quadric * q, unsigned int n)
 {
-	gluQuadricNormals((GLUquadric *)q->data, glumap(n));
+	gluQuadricNormals((GLUquadric *)q->data, n);
 }
 
 void QuadricTexture(struct quadric * q, unsigned char f)

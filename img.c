@@ -1,12 +1,13 @@
 #include "img.h"
 #include <stdint.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 
 #define BMP 19778
 
 union pixel_t {
-	struct {
+	struct col_t {
 		unsigned char b;
 		unsigned char g;
 		unsigned char r;

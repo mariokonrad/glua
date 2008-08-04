@@ -1,17 +1,24 @@
 
 tex = gl.textures()
 
+accel = 0.5
+
+omega_earth = 504.0
 phi_earth = 0.0
 img_earth = nil
 tex_earth = nil
 quad_earth = nil
 
+omega_earth_moon = 18.0
 phi_earth_moon = 0.0
 
+omega_moon = 18.0
 phi_moon = 0.0
 img_moon = nil
 tex_moon = nil
 quad_moon = nil
+
+timestamp = util.time_usec()
 
 display = function()
 	gl.Clear(gl._COLOR_BUFFER_BIT + gl._DEPTH_BUFFER_BIT)
@@ -68,10 +75,24 @@ motion = function(x, y)
 	print('motion  x=' .. x .. '  y=' .. y)
 end
 
+delta_phi = function(phi, delta)
+    local p = phi + delta
+    if p > 0.0 then
+        while p > 360.0 do p = p - 360.0 end
+    else
+        while p < 0.0 do p = p + 360.0 end
+    end
+    return p
+end
+
 idle = function()
-    phi_earth = math.fmod(phi_earth + 1.0, 360.0)
-	phi_moon = math.fmod(phi_moon + 0.0357, 360.0)
-	phi_earth_moon = math.fmod(phi_earth_moon + 0.0357, 360.0)
+    local t = util.time_usec()
+    local dt = accel * 0.000001 * (timestamp - t)
+    timestamp = t
+
+    phi_earth = delta_phi(phi_earth, -(omega_earth * dt))
+    phi_moon = delta_phi(phi_moon, -(omega_moon * dt))
+    phi_earth_moon = delta_phi(phi_earth_moon, -(omega_earth_moon * dt))
     glut.PostRedisplay()
 end
 
@@ -89,7 +110,7 @@ glut.KeyboardFunc('keyboard')
 glut.MouseFunc('mouse')
 glut.MotionFunc('motion')
 glut.IdleFunc('idle')
-gl.ClearColor(0.1, 0.1, 0.1, 1.0)
+gl.ClearColor(0.3, 0.3, 0.3, 1.0)
 gl.ClearDepth(1.0)
 gl.Enable(gl._DEPTH_TEST)
 gl.Enable(gl._NORMALIZE)
