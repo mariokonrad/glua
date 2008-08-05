@@ -64,15 +64,7 @@ reshape = function(w, h)
 end
 
 keyboard = function(c, x, y)
-	print('keyboard  c=' .. c .. '  x=' .. x .. '  y=' .. y)
-end
-
-mouse = function(b, s, x, y)
-	print('mouse  b=' .. b .. '  s=' .. s .. '  x=' .. x .. '  y=' .. y)
-end
-
-motion = function(x, y)
-	print('motion  x=' .. x .. '  y=' .. y)
+	if c == util.KEY_q or c == util.KEY_Q or c == util.KEY_ESC then util.quit_app() end
 end
 
 delta_phi = function(phi, delta)
@@ -107,8 +99,6 @@ glut.RegisterCallback()
 glut.DisplayFunc('display')
 glut.ReshapeFunc('reshape')
 glut.KeyboardFunc('keyboard')
-glut.MouseFunc('mouse')
-glut.MotionFunc('motion')
 glut.IdleFunc('idle')
 gl.ClearColor(0.3, 0.3, 0.3, 1.0)
 gl.ClearDepth(1.0)
