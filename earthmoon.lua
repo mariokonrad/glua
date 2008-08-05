@@ -1,23 +1,17 @@
-
 tex = gl.textures()
-
 accel = 0.5
-
 omega_earth = 504.0
 phi_earth = 0.0
 img_earth = nil
 tex_earth = nil
 quad_earth = nil
-
 omega_earth_moon = 18.0
 phi_earth_moon = 0.0
-
 omega_moon = 18.0
 phi_moon = 0.0
 img_moon = nil
 tex_moon = nil
 quad_moon = nil
-
 timestamp = util.time_usec()
 
 display = function()
@@ -64,7 +58,9 @@ reshape = function(w, h)
 end
 
 keyboard = function(c, x, y)
-	if c == util.KEY_q or c == util.KEY_Q or c == util.KEY_ESC then util.quit_app() end
+	if c == util.KEY_q or c == util.KEY_Q or c == util.KEY_ESC then
+		util.quit_app()
+	end
 end
 
 delta_phi = function(phi, delta)
@@ -94,7 +90,7 @@ img_moon = img.load_bmp('moon.bmp')
 glut.InitWindowSize(600, 400)
 glut.InitDisplayMode(glut._RGBA + glut._DOUBLE + glut._DEPTH)
 glut.InitWindowPosition(0, 0)
-glut.CreateWindow('GL1')
+glut.CreateWindow('Earth and Moon')
 glut.RegisterCallback()
 glut.DisplayFunc('display')
 glut.ReshapeFunc('reshape')
@@ -114,13 +110,17 @@ gl.GenTextures(2, tex)
 
 tex_earth = gl.tex(tex, 0)
 gl.BindTexture(gl._TEXTURE_2D, tex_earth)
-gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_earth), img.image_height(img_earth), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.image_data(img_earth))
+gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_earth),
+	img.image_height(img_earth), 0, gl._RGBA, gl._UNSIGNED_BYTE,
+	img.image_data(img_earth))
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
 
 tex_moon = gl.tex(tex, 1)
 gl.BindTexture(gl._TEXTURE_2D, tex_moon)
-gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_moon), img.image_height(img_moon), 0, gl._RGBA, gl._UNSIGNED_BYTE, img.image_data(img_moon))
+gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_moon),
+	img.image_height(img_moon), 0, gl._RGBA, gl._UNSIGNED_BYTE,
+	img.image_data(img_moon))
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
 gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
 

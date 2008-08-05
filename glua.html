@@ -11,6 +11,7 @@ h3 { font-family:sans-serif; }
 
 
 <h1>glua</h1>
+<p>&copy; 2008 Mario Konrad</p>
 <h2>Table of Contents</h2>
 <ul class="toc">
 	<li>1. <a href="#s_1">Description</a><ul>
@@ -40,6 +41,7 @@ h3 { font-family:sans-serif; }
 <p>For beginners and their first steps it may be helpful.</p>
 <p>Supported are many of the functions of OpenGL 1.1, GLU (GL utility),
 	and GLUT (GL utility toolkit).</p>
+<p>Please note: this is not an introduction into OpenGL.</p>
 
 <h3>1.2 OpenGL Support</h3>
 <p>All of the following GLUT function are supported. This list contains
@@ -397,17 +399,268 @@ h3 { font-family:sans-serif; }
 </ul>
 
 <h2 id="s_2">2. Usage</h2>
-<p>Just start the program with the script you like to execute as parameter:</p>
-<pre class="shell">$ ./glua example1.lua</pre>
+<p>Just start the program with the script you like to execute as parameter, example:</p>
+<pre class="shell">$ ./glua simple.lua</pre>
 
 <h2 id="s_3">3. Examples</h2>
-<!-- TODO -->
+<p>This chapter shows two examples how to use <tt>glua</tt>.
+	There is not an example for every supported GL/GLU/GLUT function,
+	but you'll get the idea.</p>
 
 <h3 id="s_3_1">3.1 Simple</h3>
-<!-- TODO -->
+<p>This is a very simple example that shows the bare minimum. A nice helix on black
+	ground is drawn.</p>
+<p>File: <a href=""><tt>simple.lua</tt></a></p>
+<center><img src="simple.gif" alt="Simple"><br><b>Figure 1: Screenshot of the simple example</b></center>
+<p>The display function is very straight forward. Clear buffers,
+	position observer (line 5), then draw a helix with growing
+	radius.</p>
+<pre class="src">
+     2    display = function()
+     3        gl.Clear(gl._COLOR_BUFFER_BIT)
+     4        gl.LoadIdentity()
+     5        gl.Translatef(0.0, 0.0, 10.0)
+     6    
+     7        local r = 10
+     8    
+     9        gl.Color4f(1.0, 1.0, 1.0, 1.0)
+    10        gl.Begin(gl._TRIANGLE_FAN)
+    11            gl.Vertex2i(0, 0)
+    12            for phi = 0,870,30 do
+    13                local rad = phi * math.pi / 180.0
+    14                gl.Vertex2i(r * math.sin(rad), r * math.cos(rad))
+    15                r = r * 1.1
+    16            end
+    17        gl.End()
+    18    
+    19        gl.Flush()
+    20    end
+</pre>
+<p>The following function handles the resize of the window. GLUT also
+	uses this function to initialize the GL part and is therefore
+	mandatory. In this case we use an orthogonal projection.</p>
+<pre class="src">
+    22    reshape = function(w, h)
+    23        gl.Viewport(0, 0, w, h)
+    24        gl.MatrixMode(gl._PROJECTION)
+    25        gl.LoadIdentity()
+    26        gl.Ortho(-150.0, 150.0, -150.0, 150.0, -150.0, 150.0)
+    27        gl.MatrixMode(gl._MODELVIEW)
+    28    end
+</pre>
+<p>The <tt>keyboard</tt> function listens for <tt>q,Q,ESCAPE</tt> buttons
+	and quits the demo if occurring.</p>
+<pre class="src">
+    30    keyboard = function(c, x, y)
+    31        if c == util.KEY_q or c == util.KEY_Q or c == util.KEY_ESC then
+    32            util.quit_app()
+    33        end
+    34    end
+</pre>
+<p>The initialization is nothing special. We tell GLUT to create a window
+	with a certain size and position.</p>
+<p>Be aware of the non-GLUT function on line 40 (marked bold). This class
+	is necessary to let <tt>glua</tt> register the callback functions
+	within GLUT. Everything else is just plain GL, GLU and GLUT.</p>
+<pre class="src">
+    36    glut.InitWindowSize(300, 300)
+    37    glut.InitDisplayMode(glut._RGBA)
+    38    glut.InitWindowPosition(0, 0)
+    39    glut.CreateWindow('Simple')
+<b>    40    glut.RegisterCallback()</b>
+    41    glut.DisplayFunc('display')
+    42    glut.ReshapeFunc('reshape')
+    43    glut.KeyboardFunc('keyboard')
+    44    gl.ClearColor(0.0, 0.0, 0.0, 1.0)
+    45    gl.PolygonMode(gl._FRONT_AND_BACK, gl._LINE)
+    46    
+    47    glut.MainLoop()
+</pre>
+<p>Run this script like:</p>
+<pre class="shell">$ ./glua simple.lua</pre>
 
 <h3 id="s_3_2">3.2 Earth and Moon</h3>
-<!-- TODO -->
+<p>This example shows two spheres (earth and moon) in rotation.
+	The usage of texture mapping and quadrics (GLU) are shown as
+	well as time-based animation.</p>
+<p>File: <a href=""><tt>earthmoon.lua</tt></a></p>
+<!-- TODO: img -->
+<center><img src="earthmoon.jpg" alt="Earth and Moon"><br><b>Figure 2: Screenshot of the Earth-Moon example</b></center>
+<p>The first lines are initialization of some values:</p>
+<pre class="src">
+     1    tex = gl.textures()
+     2    accel = 0.5
+     3    omega_earth = 504.0
+     4    phi_earth = 0.0
+     5    img_earth = nil
+     6    tex_earth = nil
+     7    quad_earth = nil
+     8    omega_earth_moon = 18.0
+     9    phi_earth_moon = 0.0
+    10    omega_moon = 18.0
+    11    phi_moon = 0.0
+    12    img_moon = nil
+    13    tex_moon = nil
+    14    quad_moon = nil
+    15    timestamp = util.time_usec()
+</pre>
+<p>The function <tt>display</tt> is used to draw the scene. In this
+	case it is two spheres, each with a texture. One sphere shows
+	the earth, the other the moon. The distance between them and
+	the rotations are not accurate.</p>
+<p>First set the observer position and view direction (lines 20-24),
+	then draw the first sphere (lines 27-34), draw the second sphere
+	(lines 37-46) and finally let the buffers swap.</p>
+<pre class="src">
+    17    display = function()
+    18        gl.Clear(gl._COLOR_BUFFER_BIT + gl._DEPTH_BUFFER_BIT)
+    19        gl.LoadIdentity()
+    20        glu.LookAt(
+    21            0.0, -20.0, 20.0,
+    22            0.0,   0.0,  0.0,
+    23            0.0,   1.0,  0.0
+    24            )
+    25    
+    26        -- earth
+    27        if quad_earth then
+    28            gl.PushMatrix()
+    29            gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
+    30            gl.BindTexture(gl._TEXTURE_2D, tex_earth)
+    31            gl.Rotatef(phi_earth, 0.0, 0.0, 1.0)
+    32            glu.Sphere(quad_earth, 4.0, 32, 32)
+    33            gl.PopMatrix()
+    34        end
+    35    
+    36        -- moon
+    37        if quad_moon then
+    38            gl.PushMatrix()
+    39            gl.Color4fv( { 1.0, 1.0, 1.0, 1.0 } )
+    40            gl.Rotatef(phi_earth_moon, 0.0, 0.0, 1.0)
+    41            gl.Translatef(10.0, 0.0, 0.0)
+    42            gl.BindTexture(gl._TEXTURE_2D, tex_moon)
+    43            gl.Rotatef(phi_moon, 1.0, 1.0, 1.0)
+    44            glu.Sphere(quad_moon, 2.0, 32, 32)
+    45            gl.PopMatrix()
+    46        end
+    47    
+    48        gl.Flush()
+    49        glut.SwapBuffers()
+    50    end
+</pre>
+<p>This function sets the viewport and projection options.</p>
+<pre class="src">
+    52    reshape = function(w, h)
+    53        gl.Viewport(0, 0, w, h)
+    54        gl.MatrixMode(gl._PROJECTION)
+    55        gl.LoadIdentity()
+    56        glu.Perspective(60.0, w/h, 0.1, 100.0)
+    57        gl.MatrixMode(gl._MODELVIEW)
+    58    end
+</pre>
+<p>The <tt>keyboard</tt> function listens for <tt>q,Q,ESCAPE</tt> buttons
+	and quits the demo if occurring.</p>
+<pre class="src">
+    60    keyboard = function(c, x, y)
+    61        if c == util.KEY_q or c == util.KEY_Q or c == util.KEY_ESC then
+    62            util.quit_app()
+    63        end
+    64    end
+</pre>
+<p>Function to increment/decrement angles and keeping them between 0 and 360 degrees.</p>
+<pre class="src">
+    66    delta_phi = function(phi, delta)
+    67        local p = phi + delta
+    68        if p &gt; 0.0 then
+    69            while p &gt; 360.0 do p = p - 360.0 end
+    70        else
+    71            while p &lt; 0.0 do p = p + 360.0 end
+    72        end
+    73        return p
+    74    end
+</pre>
+<p>Whenever GLUT has some time to spare, this function will be called.
+	It calculates the time since the last time the angles were altered
+	and increases the angles for earth, the moon and the moon arround the
+	earth accordingly. At last it asks GLUT to redraw the scene.</p>
+<pre class="src">
+    76    idle = function()
+    77        local t = util.time_usec()
+    78        local dt = accel * 0.000001 * (timestamp - t)
+    79        timestamp = t
+    80    
+    81        phi_earth = delta_phi(phi_earth, -(omega_earth * dt))
+    82        phi_moon = delta_phi(phi_moon, -(omega_moon * dt))
+    83        phi_earth_moon = delta_phi(phi_earth_moon, -(omega_earth_moon * dt))
+    84        glut.PostRedisplay()
+    85    end
+</pre>
+<p>The final part does not reside within a function. It handles the
+	entire GL/GLUT initialization, loads textures and creates
+	the GLU quadrics.</p>
+<p>The only lines special (marked bold) to <tt>glua</tt> are <tt>94</tt>,
+	<tt>111</tt> and <tt>119</tt>. Those are used to register the GLUT callback
+	functions and get the texutre handle out of the array <tt>tex</tt>.
+	Once you get the IDs, they can be used as normal.</p>
+<pre class="src">
+    87    img_earth = img.load_bmp('earth.bmp')
+    88    img_moon = img.load_bmp('moon.bmp')
+    89    
+    90    glut.InitWindowSize(600, 400)
+    91    glut.InitDisplayMode(glut._RGBA + glut._DOUBLE + glut._DEPTH)
+    92    glut.InitWindowPosition(0, 0)
+    93    glut.CreateWindow('Earth and Moon')
+<b>    94    glut.RegisterCallback()</b>
+    95    glut.DisplayFunc('display')
+    96    glut.ReshapeFunc('reshape')
+    97    glut.KeyboardFunc('keyboard')
+    98    glut.IdleFunc('idle')
+    99    gl.ClearColor(0.3, 0.3, 0.3, 1.0)
+   100    gl.ClearDepth(1.0)
+   101    gl.Enable(gl._DEPTH_TEST)
+   102    gl.Enable(gl._NORMALIZE)
+   103    gl.Enable(gl._TEXTURE_2D)
+   104    gl.BlendFunc(gl._ONE, gl._ONE)
+   105    gl.CullFace(gl._BACK)
+   106    gl.FrontFace(gl._CCW)
+   107    gl.PolygonMode(gl._FRONT_AND_BACK, gl._FILL)
+   108    
+   109    gl.GenTextures(2, tex)
+   110    
+<b>   111    tex_earth = gl.tex(tex, 0)</b>
+   112    gl.BindTexture(gl._TEXTURE_2D, tex_earth)
+   113    gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_earth),
+   114        img.image_height(img_earth), 0, gl._RGBA, gl._UNSIGNED_BYTE,
+   115        img.image_data(img_earth))
+   116    gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
+   117    gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
+   118    
+<b>   119    tex_moon = gl.tex(tex, 1)</b>
+   120    gl.BindTexture(gl._TEXTURE_2D, tex_moon)
+   121    gl.TexImage2D(gl._TEXTURE_2D, 0, 4, img.image_width(img_moon),
+   122        img.image_height(img_moon), 0, gl._RGBA, gl._UNSIGNED_BYTE,
+   123        img.image_data(img_moon))
+   124    gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MIN_FILTER, gl._LINEAR)
+   125    gl.TexParameteri(gl._TEXTURE_2D, gl._TEXTURE_MAG_FILTER, gl._LINEAR)
+   126    
+   127    quad_earth = glu.NewQuadric()
+   128    glu.QuadricNormals(quad_earth, glu._SMOOTH)
+   129    glu.QuadricTexture(quad_earth, glu._TRUE)
+   130    
+   131    quad_moon = glu.NewQuadric()
+   132    glu.QuadricNormals(quad_moon, glu._SMOOTH)
+   133    glu.QuadricTexture(quad_moon, glu._TRUE)
+   134    
+   135    glut.MainLoop()
+</pre>
+<p>The following lines will not be executed, but they are here
+	to show how to destroy the quadrics and textures.</p>
+<pre class="src">
+   137    glu.DeleteQuadric(quad_moon)
+   138    glu.DeleteQuadric(quad_earth)
+   139    gl.DeleteTextures(2, tex)
+   140    img.free_img(img_earth)
+   141    img.free_img(img_moon)
+</pre>
 
 <h2 id="s_4">4. Download</h2>
 <p>All source code provided by this page is distributed unter the terms of the
@@ -428,6 +681,8 @@ h3 { font-family:sans-serif; }
 <p>The <tt>Makefile</tt> tries to determine the platform (one of the supported)
 	and sets all variables accordingly.</p>
 <p>All developer packages for OpenGL, GLU and GLUT have to be installed.</p>
+
+<br>
 
 
 
