@@ -392,11 +392,13 @@ h3 { font-family:sans-serif; }
 <ul>
 	<li>img.load_bmp</li>
 	<li>img.free_img</li>
+	<li>util.timeusec</li>
+	<li>util.quit_app</li>
 </ul>
 
 <h2 id="s_2">2. Usage</h2>
 <p>Just start the program with the script you like to execute as parameter:</p>
-<pre class="shell">$ glua example1.lua</pre>
+<pre class="shell">$ ./glua example1.lua</pre>
 
 <h2 id="s_3">3. Examples</h2>
 <!-- TODO -->
@@ -421,10 +423,10 @@ h3 { font-family:sans-serif; }
 <h2 id="s_5">5. Build</h2>
 <p>Unfortunately, the build does not utilize the GNU autotools. However,
 	the build was tested under Cygwin and Linux (Kubuntu 8.04).</p>
-<p>To build under Linux:</p>
-<pre class="shell">$ make linux</pre>
-<p>To build under Cygwin:</p>
-<pre class="shell">$ make cygwin</pre>
+<p>To build under Linux or Cygwin:</p>
+<pre class="shell">$ make</pre>
+<p>The <tt>Makefile</tt> tries to determine the platform (one of the supported)
+	and sets all variables accordingly.</p>
 <p>All developer packages for OpenGL, GLU and GLUT have to be installed.</p>
 
 
